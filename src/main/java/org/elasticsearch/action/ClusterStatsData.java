@@ -99,6 +99,19 @@ public class ClusterStatsData extends ActionResponse {
         floodStageInPct = floodStageInPctRef[0];
     }
 
+    public ClusterStatsData(StreamInput in) throws IOException {
+        super(in);
+        thresholdEnabled = in.readOptionalBoolean();
+        //
+        diskLowInBytes = in.readOptionalLong();
+        diskHighInBytes = in.readOptionalLong();
+        floodStageInBytes = in.readOptionalLong();
+        //
+        diskLowInPct = in.readOptionalDouble();
+        diskHighInPct = in.readOptionalDouble();
+        floodStageInPct = in.readOptionalDouble();
+    }
+
     /**
      * Try to extract and parse value from settings for given key.
      * First it tries to parse it as a RatioValue (pct) then as byte size value.
@@ -126,22 +139,7 @@ public class ClusterStatsData extends ActionResponse {
     }
 
     @Override
-    public void readFrom(StreamInput in) throws IOException {
-        super.readFrom(in);
-        thresholdEnabled = in.readOptionalBoolean();
-        //
-        diskLowInBytes = in.readOptionalLong();
-        diskHighInBytes = in.readOptionalLong();
-        floodStageInBytes = in.readOptionalLong();
-        //
-        diskLowInPct = in.readOptionalDouble();
-        diskHighInPct = in.readOptionalDouble();
-        floodStageInPct = in.readOptionalDouble();
-    }
-
-    @Override
     public void writeTo(StreamOutput out) throws IOException {
-        super.writeTo(out);
         out.writeOptionalBoolean(thresholdEnabled);
         //
         out.writeOptionalLong(diskLowInBytes);
