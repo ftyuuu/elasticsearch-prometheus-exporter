@@ -105,10 +105,10 @@ esplugin {
     classname pluginClassname
 }
 
-integTestCluster {
-    numNodes = 2
-    clusterName = "PrometheusExporterITCluster"
-}
+//integTestCluster {
+//    numNodes = 2
+//    clusterName = "PrometheusExporterITCluster"
+//}
 
 checkstyle {
     configFile = new File(rootDir, "checkstyle.xml")
